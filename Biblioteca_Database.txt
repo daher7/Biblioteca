@@ -1,0 +1,52 @@
+CREATE DATABASE biblioteca;
+
+CREATE TABLE autores(
+cod_autor SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+nombre VARCHAR(30) NOT NULL,
+apellidos VARCHAR(50),
+PRIMARY KEY(cod_autor)
+);
+
+CREATE TABLE libros(
+cod_libro SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+titulo VARCHAR(100) UNIQUE NOT NULL,
+fecha VARCHAR(4) NOT NULL,
+genero VARCHAR(20) NOT NULL,
+editorial VARCHAR (100) NOT NULL,
+portada VARCHAR(250) NOT NULL,
+argumento VARCHAR(1000) NOT NULL,
+PRIMARY KEY(cod_libro)
+);
+
+CREATE TABLE autores_libros(
+cod_autor SMALLINT UNSIGNED NOT NULL,
+cod_libro SMALLINT UNSIGNED NOT NULL,
+PRIMARY KEY(cod_autor, cod_libro),
+FOREIGN KEY(cod_autor) REFERENCES autores(cod_autor)
+ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY(cod_libro) REFERENCES libros(cod_libro)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE usuarios(
+cod_usuario SMALLINT UNSIGNED NOT NULL,
+usuario VARCHAR(100) NOT NULL,
+contrasena VARCHAR(200) NOT NULL,
+alias VARCHAR(50) NOT NULL,
+PRIMARY KEY(cod_usuario)
+);
+
+CREATE UNIQUE INDEX i_nom_ape ON autores(nombre, apellidos);
+
+CREATE INDEX i_titulo ON libros(titulo);
+
+CREATE INDEX i_fecha ON libros(fecha);
+
+CREATE INDEX i_genero ON libros(genero);
+
+CREATE INDEX i_editorial ON libros(editorial);
+
+
+ALTER TABLE autores AUTO_INCREMENT=1;
+
+ALTER TABLE libros AUTO_INCREMENT=1;
